@@ -1,0 +1,22 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "WES API",
+      "version": "0.0.1",
+      "title": "WES API",
+      "contact": {
+        "name": "contact@overture.bio"
+      },
+      "license": {}
+    },
+    "host": "wes.light.overture.bio",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "WorkflowExecutionService",
+        "description": "the WES API"
+      }
+    ],
+    "paths":{},
+    "definitions":{}
+  }
