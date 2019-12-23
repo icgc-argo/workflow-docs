@@ -19,6 +19,7 @@
     "node": ">=7.10.1"
   },
   "scripts": {
-    "start": "swagger-combine"
+    "start": "swagger-combine",
+    "test": "echo 'no test yet'"
   }
 }
