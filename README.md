@@ -3,7 +3,7 @@
  This repository contains two parts: swagger json merge tool and a node application that serves WES api.
 
 ### Swagger Combine 
-#### Why swagger docs need to be combined?
+#### Why do swagger docs need to be combined?
 WES API is a standard that describes how to run and manage workflows. We currently have two workflow APIs: 
 workflow management and workflow search. In order for the users to interact with all APIs through a single 
 entry point, a combined swagger doc is needed for centralizing separate APIs.

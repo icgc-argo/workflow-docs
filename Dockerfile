@@ -4,5 +4,4 @@ COPY package*.json ./
 RUN npm ci
 ENV NODE_ENV=production
 COPY . ./
-RUN node merge.js -o merged.json WES-swagger-template.json http://wf-search.light.overture.bio/v2/api-docs http://wf-management.light.overture.bio/v2/api-docs
-CMD node app.js
+CMD node merge.js -o merged.json WES-swagger-template.json $WF_SEARCH_API $WF_MANAGEMENT_API && node app.js
