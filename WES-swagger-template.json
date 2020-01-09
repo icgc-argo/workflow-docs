@@ -10,7 +10,7 @@
       "license": {}
     },
     "host": "wes.light.overture.bio",
-    "basePath": "/",
+    "basePath": "/api/v1",
     "tags": [
       {
         "name": "WorkflowExecutionService",
