@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
-const HOST = process.env.HOST || 'wes.light.overture.bio';
+const HOST = process.env.HOST || 'localhost';
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./merged.json');
 
