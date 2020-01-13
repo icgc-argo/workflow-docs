@@ -9,7 +9,7 @@
       },
       "license": {}
     },
-    "host": "wes.light.overture.bio",
+    "host": "",
     "basePath": "/api/v1",
     "tags": [
       {
