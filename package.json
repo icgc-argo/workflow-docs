@@ -1,6 +1,6 @@
 {
   "name": "swagger-combine",
-  "version": "1.0.1-SNAPSHOT",
+  "version": "1.0.2-SNAPSHOT",
   "description": "A simple tool to shallow-merge two or more swagger 2.0 specs into one",
   "main": "merge.js",
   "author": "Alexis Li",
