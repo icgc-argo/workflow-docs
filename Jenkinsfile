@@ -74,7 +74,7 @@ spec:
         stage('deploy to rdpc-collab-dev') {
             when {
 // Change branch to develop after successful testing
-                branch "2020-07-06-add-jenkins-deploy-stage"
+                branch "2020-07-07-add-jenkins-deploy-stage"
             }
             steps {
                 build(job: "/provision/helm", parameters: [
