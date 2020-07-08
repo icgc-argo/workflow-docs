@@ -1,5 +1,6 @@
 def dockerHubRepo = "icgcargo/workflow-docs"
 def githubRepo = "icgc-argo/workflow-docs"
+def chartVersion = "0.2.0"
 def commit = "UNKNOWN"
 def version = "UNKNOWN"
 
@@ -70,6 +71,21 @@ spec:
             }
         }
 
+        stage('deploy to rdpc-collab-dev') {
+            when {
+                branch "develop"
+            }
+            steps {
+                build(job: "/provision/helm", parameters: [
+                    [$class: 'StringParameterValue', name: 'AP_RDPC_ENV', value: 'dev' ],
+                    [$class: 'StringParameterValue', name: 'AP_CHART_NAME', value: 'workflow-docs'],
+                    [$class: 'StringParameterValue', name: 'AP_RELEASE_NAME', value: 'docs'],
+                    [$class: 'StringParameterValue', name: 'AP_HELM_CHART_VERSION', value: "${chartVersion}"],
+                    [$class: 'StringParameterValue', name: 'AP_ARGS_LINE', value: "--set-string image.tag=${version}-${commit}" ]
+                ])
+            }
+        }
+
         stage('Build latest') {
             when {
                 branch "master"
@@ -89,6 +105,22 @@ spec:
                 }
             }
         }
+
+        stage('deploy to rdpc-collab-qa') {
+            when {
+                branch "master"
+            }
+            steps {
+                build(job: "/provision/helm", parameters: [
+                    [$class: 'StringParameterValue', name: 'AP_RDPC_ENV', value: 'qa' ],
+                    [$class: 'StringParameterValue', name: 'AP_CHART_NAME', value: 'workflow-docs'],
+                    [$class: 'StringParameterValue', name: 'AP_RELEASE_NAME', value: 'docs'],
+                    [$class: 'StringParameterValue', name: 'AP_HELM_CHART_VERSION', value: "${chartVersion}"],
+                    [$class: 'StringParameterValue', name: 'AP_ARGS_LINE', value: "--set-string image.tag=${version}" ]
+                ])
+            }
+        }
+
     }
     post {
         unsuccessful {
