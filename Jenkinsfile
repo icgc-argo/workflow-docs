@@ -60,22 +60,6 @@ spec:
             }
         }
 
-        stage('Testing DIND changes') {
-            when {
-                branch "jenkins-dind-fix"
-            }
-            steps {
-                container('docker') {
-                    withCredentials([usernamePassword(credentialsId:'argoDockerHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        sh 'docker login -u $USERNAME -p $PASSWORD'
-                    }
-                    // DNS error if --network is default
-                    sh "docker build --network=host . -t ${dockerHubRepo}:edge -t ${dockerHubRepo}:${version}-${commit}"
-                }
-            }
-        }
-
-
         stage('Build edge') {
             when {
                 branch "develop"
