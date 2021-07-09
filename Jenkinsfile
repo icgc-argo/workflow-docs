@@ -16,17 +16,23 @@ spec:
   - name: node
     image: node:12.6.0
     tty: true
+  - name: dind-daemon
+    image: docker:18.06-dind
+    securityContext:
+        privileged: true
+    volumeMounts:
+      - name: docker-graph-storage
+        mountPath: /var/lib/docker
   - name: docker
     image: docker:18-git
     tty: true
-    volumeMounts:
-    - mountPath: /var/run/docker.sock
-      name: docker-sock
+    env:
+      - name: DOCKER_HOST
+        value: tcp://localhost:2375
   volumes:
-  - name: docker-sock
-    hostPath:
-      path: /var/run/docker.sock
-      type: File
+  - name: docker-graph-storage
+    emptyDir: {}
+
 """
         }
     }
@@ -53,6 +59,22 @@ spec:
                 }
             }
         }
+
+        stage('Testing DIND changes') {
+            when {
+                branch "jenkins-dind-fix"
+            }
+            steps {
+                container('docker') {
+                    withCredentials([usernamePassword(credentialsId:'argoDockerHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh 'docker login -u $USERNAME -p $PASSWORD'
+                    }
+                    // DNS error if --network is default
+                    sh "docker build --network=host . -t ${dockerHubRepo}:edge -t ${dockerHubRepo}:${version}-${commit}"
+                }
+            }
+        }
+
 
         stage('Build edge') {
             when {
